@@ -1,0 +1,13 @@
+---
+applications:
+- name: AFL
+  host: AFL-ALMANAC
+  memory: 256M
+  services:
+  - mean-starter-mongodb
+  env:
+    NODE_ENV: cloud-foundry
+declared-services:
+  mean-starter-mongodb:
+    label: compose-for-mongodb
+    plan: Standard
