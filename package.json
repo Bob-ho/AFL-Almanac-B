@@ -20,6 +20,7 @@
   "dependencies": {
     "angular-file-upload": "^2.5.0",
     "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.3",
     "cfenv": "^1.1.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
