@@ -1,6 +1,12 @@
-
-//var app = angular.module("appControl", []);
 var app = angular.module("indexApp", ['ngRoute']);
+
+
+//Player controller
+app.controller('playerCtr', function ($scope, $routeParams) {
+    console.log("i am player "+ $routeParams.playerName);
+    $scope.name = $routeParams.playerName;
+});
+
 
 //App configuration
 app.config(function ($routeProvider, $locationProvider) {
@@ -14,6 +20,10 @@ app.config(function ($routeProvider, $locationProvider) {
         })
         .when("/login", {
             templateUrl: "app/views/page/login.html"
+        }) 
+        .when("/player/:playerName", {
+            templateUrl: "app/views/page/player.html",
+            controller: 'playerCtr'
         })
         .otherwise({ redirectTo: "/" });
     $locationProvider.html5Mode({
