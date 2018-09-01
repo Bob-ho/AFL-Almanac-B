@@ -28,7 +28,7 @@ app.get("/login", function(req, res)
 {
     res.sendFile('/login.html');
 });
-/*
+
 router.post('/insert',function(req,res,next){
  var item={
 	name: req.body.name,
@@ -48,10 +48,6 @@ mongo.connect(url, function(err, db){
 		console.log('item inserted');
 });
 });
-*/
-
-
-/*
 app.post('/', function (req, res) {
   res.render('signup.html');
 });
@@ -59,9 +55,9 @@ app.post('/', function (req, res) {
   res.render('login.html');
 });
 
-*/
-//var users=require('./Routes/users');
-//app.use('/users',users);
+
+var users=require('./Routes/users');
+app.use('/users',users);
 app.listen(port,function(){
 	console.log("server is running"+port);
 });
