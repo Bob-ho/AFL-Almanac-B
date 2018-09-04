@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Bob-ho/jobjob#readme",
   "dependencies": {
+    "angular-drag-and-drop-lists": "^2.1.0",
     "angular-file-upload": "^2.5.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
