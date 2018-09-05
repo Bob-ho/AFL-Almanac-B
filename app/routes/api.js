@@ -31,7 +31,7 @@ module.exports = function (router) {
                     else {
                         //generate the token
                         var token = jwt.sign({ username: result.username, email: result.email }, aflSecrete, { expiresIn: '2h' });
-                        res.json({ success: true, message: "User authenticated", token: token });
+                        res.json({ success: true, message: "User authenticated", token: token,username: result.username});
 
                     }
                 }

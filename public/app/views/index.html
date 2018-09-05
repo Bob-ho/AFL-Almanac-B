@@ -35,7 +35,7 @@
 
 </head>
 
-<body ng-app="indexApp">
+<body ng-app="indexApp" ng-controller="HeaderController">
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -89,16 +89,18 @@
                                 width="30" height="30" alt=""></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right mr-auto">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">User Name
+                    <li class="dropdown" ng-show="authenticated">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{UserName}}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/myAccount">My Account</a></li>
                             <li><a href="/myCollection">My Collection</a></li>
                         </ul>
                     </li>
-                    <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="/register" ng-hide="authenticated"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="/login" ng-hide="authenticated"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href='' ng-click="logout()" ng-show="authenticated"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>

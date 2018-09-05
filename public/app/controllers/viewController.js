@@ -1,5 +1,36 @@
 var app = angular.module("indexApp", ['ngRoute']);
+app.controller('HeaderController', function ($scope, $window, $location, $window, $rootScope, $http) {
 
+    //When the route change, this function will call
+    $rootScope.$on('$routeChangeStart', function () {
+        //console.log("Get token" +$window.localStorage.getItem("token"));
+        //Get token
+        if ($window.localStorage.getItem("token")) {
+            $scope.authenticated = true;
+            $scope.UserName = $window.localStorage.getItem("username");
+            $window.localStorage.getItem("token");
+
+            console.log("user login");
+        }
+        else {
+            $scope.authenticated = false;
+            console.log("user is not login");
+        }
+
+    });
+
+
+    
+    //Logout function when the user click to the logout button
+    $scope.logout = function () {
+        console.log("user logout");
+        $scope.authenticated = false;
+        $window.localStorage.removeItem("token");
+        $window.localStorage.removeItem("username");
+        $location.path('/Home');
+    };
+
+});
 //my Account controller
 app.controller('myAccountCtr', function ($scope, $routeParams,$http) {
     console.log("Account controller");
@@ -44,7 +75,9 @@ app.controller('loginController', function ($scope, $http, $location, $window) {
         }).then(function mySuccess(response) {
             if (response.data.success) {
                 //set token to local storage
-                $window.localStorage.setItem("token", response.data.token)
+                $window.localStorage.setItem("token", response.data.token);
+                $window.localStorage.setItem("username", response.data.username);
+                console.log(response.data.username);
                 console.log(response.data.token);
                 //set the error meassage
                 $scope.successMsg = response.data.message;
