@@ -30,7 +30,30 @@ app.controller('myCollectionCtr', function ($scope, $routeParams,$http) {
 
 
 });
-
+//******User Register*****/
+app.controller('registerController', function ($scope, $http, $location) {
+    console.log("this is register controller");
+    $scope.register = function () {
+        console.log("This is scope" + $scope.regData.username);
+        $scope.errMessage = false;
+        $http({
+            method: "post",
+            url: "/Register",
+            data: $scope.regData
+        }).then(function mySuccess(response) {
+            console.log(response.data.success);
+            if (response.data.success) {
+                console.log(response.data.message);
+                $scope.successMsg = response.data.message;
+                $location.path("/login");
+            }
+            else {
+                console.log(response.data.message);
+                $scope.errMessage = response.data.message;
+            }
+        });
+    };
+});
 //Player controller
 app.controller('playerCtr', function ($scope, $routeParams,$http) {
     console.log("i am player "+ $routeParams.playerName);
@@ -65,7 +88,8 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: "app/views/page/home.html"
         })
         .when("/register", {
-            templateUrl: "app/views/page/register.html"
+            templateUrl: "app/views/page/register.html",
+            controller: 'registerController'
         })
         .when("/login", {
             templateUrl: "app/views/page/login.html"
