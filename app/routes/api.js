@@ -1,8 +1,52 @@
 //Import the User model
 var User = require("../models/user");
+var Player = require("../models/player");
 var jwt = require('jsonwebtoken');
 var aflSecrete = "IamVerySecreteWhereYoucouldnotFineMe";
 module.exports = function (router) {
+
+    //*****Get player detail */
+    router.post('/getPlayerDetail', function (req, res) {
+        console.log(req.body.id);
+        Player.findOne({_id: req.body.id }).exec(function (err, result) {
+            if (err) {
+                console.log("error"+ err);
+                throw err;
+            }
+            if (!result) {
+                console.log("result");
+                res.json({ success: false, message: "Could not get job detail" });
+            }
+            else {
+                console.log("pass");
+                res.json({ success: true, result: result });
+            }
+        });
+    });
+    //*****Add player details*/
+    router.post('/AddPlayer', function (req, res) {
+        var player = new Player();
+        player.playerName = req.body.playerName;
+        player.Position = req.body.Position;
+        player.Height = req.body.Height;
+        player.Weight = req.body.Weight;
+        player.DOB = req.body.DOB;
+        player.Debut = req.body.Debut;
+        player.Games = req.body.Games;
+        player.Goals = req.body.Goals;
+        console.log(player);
+
+        player.save(function (err) {
+            if (err) {
+                res.json({ success: false, message: 'Unable to save to the database', m: err });
+                return;
+            }
+            else {
+                res.json({ success: true, message: 'Player created!' });
+            }
+        });
+    });
+
 
     //*****User route**********
     //Login route
@@ -31,7 +75,7 @@ module.exports = function (router) {
                     else {
                         //generate the token
                         var token = jwt.sign({ username: result.username, email: result.email }, aflSecrete, { expiresIn: '2h' });
-                        res.json({ success: true, message: "User authenticated", token: token,username: result.username});
+                        res.json({ success: true, message: "User authenticated", token: token, username: result.username });
 
                     }
                 }

@@ -20,7 +20,7 @@ app.controller('HeaderController', function ($scope, $window, $location, $window
     });
 
 
-    
+
     //Logout function when the user click to the logout button
     $scope.logout = function () {
         console.log("user logout");
@@ -32,27 +32,27 @@ app.controller('HeaderController', function ($scope, $window, $location, $window
 
 });
 //my Account controller
-app.controller('myAccountCtr', function ($scope, $routeParams,$http) {
+app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
     console.log("Account controller");
 });
 
 //my Collection controller
-app.controller('myCollectionCtr', function ($scope, $routeParams,$http) {
+app.controller('myCollectionCtr', function ($scope, $routeParams, $http) {
     console.log("Collection controller");
 
     $scope.models = {
         selected: null,
-        lists: {"A": [], "B": []}
+        lists: { "A": [], "B": [] }
     };
 
     // Generate initial model
     for (var i = 1; i <= 10; ++i) {
-        $scope.models.lists.A.push({label: "Item A" + i});
-        $scope.models.lists.B.push({label: "Item B" + i});
+        $scope.models.lists.A.push({ label: "Item A" + i });
+        $scope.models.lists.B.push({ label: "Item B" + i });
     }
 
     // Model to JSON for demo purpose
-    $scope.$watch('models', function(model) {
+    $scope.$watch('models', function (model) {
         $scope.modelAsJson = angular.toJson(model, true);
     }, true);
 
@@ -115,36 +115,64 @@ app.controller('registerController', function ($scope, $http, $location) {
     };
 });
 //Player controller
-app.controller('playerCtr', function ($scope, $routeParams,$http) {
-    console.log("i am player "+ $routeParams.playerName);
-    $scope.name = $routeParams.playerName;
-    //Search click
-    $scope.AddToMyCollection = function () {
-        console.log("Add to my collection clicked");
+app.controller('playerCtr', function ($scope, $routeParams, $http) {
+    console.log("i am player " + $routeParams.playerID);
+   // $scope.name = $routeParams.playerID;
+    //get the url including the data parsing
+  
+    var id = $routeParams.playerID;
 
-        //Request the back-end to store it to the database.
-        $http({
-            method: "post",
-            url: "/AddToMyCollection"
-        }).then(function mySuccess(response) {
-            if (response.data.success) {
-                console.log(response);
-               
-            }
-            else {
-                console.log(response);
-               // $scope.successMsg = "Result could not foud";
-            }
-        });
-    }
+    console.log("Get player detail");
+    console.log("id " + id);
+    //Get the job detail which given the _id to retrived data from the database
+    $http({
+        method: "post",
+        url: "/getPlayerDetail",
+        data: { "id": id }
+    }).then(function mySuccess(response) {
+        if (response.data.success) {
+            console.log(response);
+            console.log(response.data.result);
+           
+        }
+        else {
+            console.log(response.data.result);
+        }
+    });
+
+
+
+
+    //Search click
+    // $scope.AddToMyCollection = function () {
+    //     console.log("Add to my collection clicked");
+
+    //     //Request the back-end to store it to the database.
+    //     $http({
+    //         method: "post",
+    //         url: "/AddToMyCollection"
+    //     }).then(function mySuccess(response) {
+    //         if (response.data.success) {
+    //             console.log(response);
+
+    //         }
+    //         else {
+    //             console.log(response);
+    //            // $scope.successMsg = "Result could not foud";
+    //         }
+    //     });
+    // }
 });
 
 
 //App configuration
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
-       
+
         .when("/Home", {
+            templateUrl: "app/views/page/home.html"
+        })
+        .when("/", {
             templateUrl: "app/views/page/home.html"
         })
         .when("/register", {
@@ -154,8 +182,8 @@ app.config(function ($routeProvider, $locationProvider) {
         .when("/login", {
             templateUrl: "app/views/page/login.html",
             controller: 'loginController'
-        }) 
-        .when("/player/:playerName", {
+        })
+        .when("/player/:playerID", {
             templateUrl: "app/views/page/player.html",
             controller: 'playerCtr'
         })
