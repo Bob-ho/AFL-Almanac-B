@@ -131,9 +131,16 @@ app.controller('playerCtr', function ($scope, $routeParams, $http) {
         data: { "id": id }
     }).then(function mySuccess(response) {
         if (response.data.success) {
-            console.log(response);
-            console.log(response.data.result);
-           
+            var res = response.data.result;
+            console.log(res);
+           $scope.playerName = res.playerName;
+           $scope.Position = res.Position
+           $scope.Height = res.Height
+           $scope.Weight = res.Weight
+           $scope.DOB = res.DOB
+           $scope.Debut = res.Debut
+           $scope.Games = res.Games
+           $scope.Goals = res.Goals
         }
         else {
             console.log(response.data.result);
