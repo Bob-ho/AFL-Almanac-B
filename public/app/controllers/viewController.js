@@ -30,6 +30,33 @@ app.controller('myCollectionCtr', function ($scope, $routeParams,$http) {
 
 
 });
+//******User Login*****/
+app.controller('loginController', function ($scope, $http, $location, $window) {
+    console.log("this is login controller");
+
+    $scope.login = function () {
+        console.log($scope.loginData);
+        $scope.errMessage = false;
+        $http({
+            method: "post",
+            url: "/Login",
+            data: $scope.loginData
+        }).then(function mySuccess(response) {
+            if (response.data.success) {
+                //set token to local storage
+                $window.localStorage.setItem("token", response.data.token)
+                console.log(response.data.token);
+                //set the error meassage
+                $scope.successMsg = response.data.message;
+                $location.path("/Home");
+            }
+            else {
+                //console.log(response.data.message);
+                $scope.errMessage = response.data.message;
+            }
+        });
+    };
+});
 //******User Register*****/
 app.controller('registerController', function ($scope, $http, $location) {
     console.log("this is register controller");
@@ -84,7 +111,7 @@ app.controller('playerCtr', function ($scope, $routeParams,$http) {
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
        
-        .when("/", {
+        .when("/Home", {
             templateUrl: "app/views/page/home.html"
         })
         .when("/register", {
@@ -92,7 +119,8 @@ app.config(function ($routeProvider, $locationProvider) {
             controller: 'registerController'
         })
         .when("/login", {
-            templateUrl: "app/views/page/login.html"
+            templateUrl: "app/views/page/login.html",
+            controller: 'loginController'
         }) 
         .when("/player/:playerName", {
             templateUrl: "app/views/page/player.html",
