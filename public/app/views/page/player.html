@@ -2,15 +2,14 @@
     <div class="col-sm-1"></div>
     <div class="col-sm-5">
         <img src="app/views/page/images/card.jpg" alt="Player">
-        <button class="col-sm-2 btn btn-danger" ng-click="AddToMyCollection()">Add To My collection</button>
-
     </div>
     <div class="col-sm-5">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">{{playerName}}</th>
+                    <th scope="col"></th>
+                    <th scope="col" class="text-primary">{{playerName}}</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -18,46 +17,53 @@
                 <tr>
                     <th scope="row"></th>
                     <td>Position</td>
-                    <td>{{Position}}</td>
+                    <td class="text-primary">{{Position}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
                     <td>Height</td>
-                    <td>{{Height}}</td>
+                    <td class="text-primary">{{Height}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
                     <td>Weight</td>
-                    <td>{{Weight}}</td>
+                    <td class="text-primary">{{Weight}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
                     <td>DOB</td>
-                    <td>{{DOB}}</td>
+                    <td class="text-primary">{{DOB}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
                     <td>Debut</td>
-                    <td>{{Debut}}</td>
+                    <td class="text-primary">{{Debut}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
                     <td>Games</td>
-                    <td>{{Games}}</td>
+                    <td class="text-primary">{{Games}}</td>
                     <td></td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
                     <td>Goals</td>
-                    <td>{{Goals}}</td>
+                    <td class="text-primary">{{Goals}}</td>
                     <td></td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="col-sm-1"></div>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <button class="btn btn-success" ng-click="AddToMyCollection()">Add To My collection</button>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>

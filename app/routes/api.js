@@ -1,9 +1,26 @@
 //Import the User model
 var User = require("../models/user");
 var Player = require("../models/player");
+var Collection = require("../models/collection");
 var jwt = require('jsonwebtoken');
 var aflSecrete = "IamVerySecreteWhereYoucouldnotFineMe";
 module.exports = function (router) {
+    
+     //*****Add To My Collection */
+     router.post('/AddToMyCollection', function (req, res) {
+        var collection = new Collection();
+        collection.username = req.body.username;
+        collection.playerID = req.body.playerID;
+        collection.save(function (err) {
+            if (err) {
+                res.json({ success: false, message: 'Unable to save to the database', m: err });
+                return;
+            }
+            else {
+                res.json({ success: true, message: 'Add created!' });
+            }
+        });
+     });
 
     //*****Get player detail */
     router.post('/getPlayerDetail', function (req, res) {
