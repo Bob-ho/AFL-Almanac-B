@@ -46,9 +46,9 @@ app.controller('myCollectionCtr', function ($scope, $http,$window) {
         data: { "username": $window.localStorage.getItem("username") }
     }).then(function mySuccess(response) {
         if (response.data.success) {
-            var res = response.data.playerID;
-            console.log(response.data);
-            
+            var res = response.data.collections;
+            console.log(res);
+            $scope.collections = response.data.collections;
         }
         else {
             console.log(response.data.result);

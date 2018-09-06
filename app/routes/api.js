@@ -38,7 +38,7 @@ module.exports = function (router) {
                 });
             });
             setTimeout(function () {
-                res.json({ success: true, player: array });
+                res.json({ success: true, collections: array });
             }, 1000);
 
         });
