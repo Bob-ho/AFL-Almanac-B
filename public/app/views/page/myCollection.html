@@ -9,10 +9,17 @@
     </div>
     <div class="col-sm-3"></div>
 </div>
+
 <!--Display area-->
 <div class="row">
     <div class="col-sm-1"></div>
-    <div class="col-sm-5">
+    <div class="col-sm-3">
+        <h4 class="text-primary">point achieved</h4>
+        <div id="piechart"></div>
+
+       
+    </div>
+    <div class="col-sm-4">
 
         <ul class="list-group" ng-repeat="row in collections">
             <li class=" col-sm-12 list-group-item" ng-click="setClickedRow(row.playerName,row.Position,row.Height,row.Weight,row.DOB,row.Debut, row.Games, row.Goals, row.Cards )">
@@ -24,61 +31,59 @@
             </li>
         </ul>
     </div>
-    <div class="col-sm-5" ng-hide="showPlayerDetail">
+    <div class="col-sm-3" ng-hide="showPlayerDetail">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col" class="text-primary">{{playerName}}</th>
-                    <th scope="col"></th>
+                    <h4 class="text-primary">{{playerName}}</h4>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row"></th>
+
                     <td>Position</td>
                     <td class="text-primary">{{Position}}</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th scope="row"></th>
+
                     <td>Height</td>
                     <td class="text-primary">{{Height}}</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th scope="row"></th>
+
                     <td>Weight</td>
                     <td class="text-primary">{{Weight}}</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th scope="row"></th>
+
                     <td>DOB</td>
                     <td class="text-primary">{{DOB}}</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th scope="row"></th>
+
                     <td>Debut</td>
                     <td class="text-primary">{{Debut}}</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th scope="row"></th>
+
                     <td>Games</td>
                     <td class="text-primary">{{Games}}</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <th scope="row"></th>
+
                     <td>Goals</td>
                     <td class="text-primary">{{Goals}}</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <button class="btn btn-success" ng-click="AddToMyCollection()">View Video</button>
+
+                    <td><button class="btn btn-success" ng-click="AddToMyCollection()">View Video</button></td>
                 </tr>
             </tbody>
         </table>

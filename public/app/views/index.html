@@ -4,7 +4,7 @@
 <head>
     <base href="/">
     <title>AFL</title>
-    <link rel="shortcut icon" type = "image/x-icon" href ="app/views/page/images/AFLlogo.png"/>
+    <link rel="shortcut icon" type="image/x-icon" href="app/views/page/images/AFLlogo.png" />
     <style>
         .footer {
             position: fixed;
@@ -28,6 +28,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <!--Angular Script created-->
     <script src="app/controllers/viewController.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 
 
 
@@ -88,6 +91,7 @@
                                 alt=""></a></li>
                     <li> <a class="navbar-brand" href="#"><img src="app/views/page/images/West_Coast_Eagles_logo_2017.svg.png"
                                 width="30" height="30" alt=""></a></li>
+
                 </ul>
                 <ul class="nav navbar-nav navbar-right mr-auto">
                     <li class="dropdown" ng-show="authenticated">
@@ -100,7 +104,8 @@
                     </li>
                     <li><a href="/register" ng-hide="authenticated"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                     <li><a href="/login" ng-hide="authenticated"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <li><a href='' ng-click="logout()" ng-show="authenticated"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                    <li><a href='' ng-click="logout()" ng-show="authenticated"><span class="glyphicon glyphicon-log-out"></span>
+                            Logout</a>
                     </li>
                 </ul>
             </div>
