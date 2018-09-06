@@ -37,24 +37,23 @@ app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
 });
 
 //my Collection controller
-app.controller('myCollectionCtr', function ($scope, $routeParams, $http) {
+app.controller('myCollectionCtr', function ($scope, $http,$window) {
     console.log("Collection controller");
-
-    $scope.models = {
-        selected: null,
-        lists: { "A": [], "B": [] }
-    };
-
-    // Generate initial model
-    for (var i = 1; i <= 10; ++i) {
-        $scope.models.lists.A.push({ label: "Item A" + i });
-        $scope.models.lists.B.push({ label: "Item B" + i });
-    }
-
-    // Model to JSON for demo purpose
-    $scope.$watch('models', function (model) {
-        $scope.modelAsJson = angular.toJson(model, true);
-    }, true);
+    //Get the job detail which given the _id to retrived data from the database
+    $http({
+        method: "post",
+        url: "/ViewMyCollection",
+        data: { "username": $window.localStorage.getItem("username") }
+    }).then(function mySuccess(response) {
+        if (response.data.success) {
+            var res = response.data.playerID;
+            console.log(response.data);
+            
+        }
+        else {
+            console.log(response.data.result);
+        }
+    });
 
 
 
@@ -115,15 +114,15 @@ app.controller('registerController', function ($scope, $http, $location) {
     };
 });
 //Player controller
-app.controller('playerCtr', function ($scope, $routeParams, $http, $window) {
+app.controller('playerCtr', function ($scope, $routeParams, $http, $window, $location) {
     console.log("i am player " + $routeParams.playerID);
-   // $scope.name = $routeParams.playerID;
+    // $scope.name = $routeParams.playerID;
     //get the url including the data parsing
-  
-    
+
+
 
     console.log("Get player detail");
-  
+
     //Get the job detail which given the _id to retrived data from the database
     $http({
         method: "post",
@@ -133,22 +132,22 @@ app.controller('playerCtr', function ($scope, $routeParams, $http, $window) {
         if (response.data.success) {
             var res = response.data.result;
             console.log(res);
-           $scope.playerName = res.playerName;
-           $scope.Position = res.Position
-           $scope.Height = res.Height
-           $scope.Weight = res.Weight
-           $scope.DOB = res.DOB
-           $scope.Debut = res.Debut
-           $scope.Games = res.Games
-           $scope.Goals = res.Goals
+            $scope.playerName = res.playerName;
+            $scope.Position = res.Position
+            $scope.Height = res.Height
+            $scope.Weight = res.Weight
+            $scope.DOB = res.DOB
+            $scope.Debut = res.Debut
+            $scope.Games = res.Games
+            $scope.Goals = res.Goals
         }
         else {
             console.log(response.data.result);
         }
     });
-    console.log("Get user name" +$window.localStorage.getItem("username"));
+    console.log("Get user name" + $window.localStorage.getItem("username"));
 
-   // Add collection click
+    // Add collection click
     $scope.AddToMyCollection = function () {
         console.log("Add to my collection clicked");
 
@@ -156,15 +155,16 @@ app.controller('playerCtr', function ($scope, $routeParams, $http, $window) {
         $http({
             method: "post",
             url: "/AddToMyCollection",
-            data: { "playerID": $routeParams.playerID, "username": $window.localStorage.getItem("username")}
+            data: { "playerID": $routeParams.playerID, "username": $window.localStorage.getItem("username") }
         }).then(function mySuccess(response) {
             if (response.data.success) {
                 console.log(response);
+                $location.path("/myCollection");
 
             }
             else {
                 console.log(response);
-        
+
             }
         });
     }

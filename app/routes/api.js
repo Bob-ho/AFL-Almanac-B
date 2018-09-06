@@ -5,12 +5,13 @@ var Collection = require("../models/collection");
 var jwt = require('jsonwebtoken');
 var aflSecrete = "IamVerySecreteWhereYoucouldnotFineMe";
 module.exports = function (router) {
-    
-     //*****Add To My Collection */
-     router.post('/AddToMyCollection', function (req, res) {
+
+    //*****Add To My Collection */
+    router.post('/AddToMyCollection', function (req, res) {
+
         var collection = new Collection();
-        collection.username = req.body.username;
         collection.playerID = req.body.playerID;
+        collection.username = req.body.username;
         collection.save(function (err) {
             if (err) {
                 res.json({ success: false, message: 'Unable to save to the database', m: err });
@@ -20,14 +21,34 @@ module.exports = function (router) {
                 res.json({ success: true, message: 'Add created!' });
             }
         });
-     });
+    });
+  
+    //*****View To My Collection */
+    router.post('/ViewMyCollection', function (req, res) {
+        var username = req.body.username;
+        var array = [];
 
+        Collection.find({ username: username }).select("playerID").exec(function (err, result) {
+            result.forEach(function (item) {
+                //Look at the Player DB 
+                Player.findOne({ _id: item.playerID }).exec(function (err, inresult) {
+                    //console.log(inresult)
+                    //Add to the Player collectoin
+                    array.push(inresult);
+                });
+            });
+            setTimeout(function () {
+                res.json({ success: true, player: array });
+            }, 1000);
+
+        });
+    });
     //*****Get player detail */
     router.post('/getPlayerDetail', function (req, res) {
         console.log(req.body.id);
-        Player.findOne({_id: req.body.id }).exec(function (err, result) {
+        Player.findOne({ _id: req.body.id }).exec(function (err, result) {
             if (err) {
-                console.log("error"+ err);
+                console.log("error" + err);
                 throw err;
             }
             if (!result) {
@@ -91,7 +112,7 @@ module.exports = function (router) {
                     }
                     else {
                         //generate the token
-                        var token = jwt.sign({ username: result.username, email: result.email }, aflSecrete, { expiresIn: '2h' });
+                        var token = jwt.sign({ _id: result._id, username: result.username, email: result.email }, aflSecrete, { expiresIn: '2h' });
                         res.json({ success: true, message: "User authenticated", token: token, username: result.username });
 
                     }
