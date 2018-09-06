@@ -38,6 +38,7 @@ app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
 
 //my Collection controller
 app.controller('myCollectionCtr', function ($scope, $http,$window) {
+    $scope.showPlayerDetail = true;
     console.log("Collection controller");
     //Get the job detail which given the _id to retrived data from the database
     $http({
@@ -54,6 +55,23 @@ app.controller('myCollectionCtr', function ($scope, $http,$window) {
             console.log(response.data.result);
         }
     });
+    //Click to each row click
+    $scope.setClickedRow = function (playerName,position,Height,Weight,DOB,Debut, Games, Goals, Cards ) {
+        $scope.showPlayerDetail = false;
+        $scope.playerName = playerName;
+        $scope.Position = position;
+        $scope.Height = Height;
+        $scope.Weight = Weight;
+        $scope.DOB = DOB;
+        $scope.Debut = Debut;
+        $scope.Games = Games;
+        $scope.Goals = Goals;
+        $scope.Cards = Cards;
+        
+        //console.log($scope.collections);
+        //console.log("direct to detail job");
+        //$location.path('/jobDetail').search({ id: id })
+    }
 
 
 
