@@ -17,7 +17,46 @@ app.controller('HeaderController', function ($scope, $window, $location, $window
             console.log("user is not login");
         }
 
+        if($window.localStorage.getItem("playerID"))
+    {
+        $scope.showCardToAddToCollection = true;
+        var array = [];
+        array.push($window.localStorage.getItem("playerName"));
+        $scope.cards = array;
+
+        console.log("card" + $scope.cards);
+    }else
+    {
+        console.log("NO");
+        $scope.showCardToAddToCollection = false;
+
+    }
+
     });
+    
+    // Add collection click
+    $scope.AddToMyCollection = function () {
+        console.log("Add to my collection clicked");
+
+        //Request the back-end to save it to the database.
+        $http({
+            method: "post",
+            url: "/AddToMyCollection",
+            data: { "playerID":$window.localStorage.getItem("playerID"), "username": $window.localStorage.getItem("username") }
+        }).then(function mySuccess(response) {
+            if (response.data.success) {
+                console.log(response);
+                $window.localStorage.removeItem("playerID");
+                $window.localStorage.removeItem("playerName");
+                $location.path("/myCollection");
+
+            }
+            else {
+                console.log(response);
+
+            }
+        });
+    }
 
 
 
@@ -156,8 +195,6 @@ app.controller('playerCtr', function ($scope, $routeParams, $http, $window, $loc
     // $scope.name = $routeParams.playerID;
     //get the url including the data parsing
 
-
-
     console.log("Get player detail");
 
     //Get the job detail which given the _id to retrived data from the database
@@ -177,6 +214,9 @@ app.controller('playerCtr', function ($scope, $routeParams, $http, $window, $loc
             $scope.Debut = res.Debut
             $scope.Games = res.Games
             $scope.Goals = res.Goals
+            console.log("id "+ res._id);
+            $window.localStorage.setItem("playerID", res._id);
+            $window.localStorage.setItem("playerName", res.playerName);
         }
         else {
             console.log(response.data.result);
@@ -196,6 +236,8 @@ app.controller('playerCtr', function ($scope, $routeParams, $http, $window, $loc
         }).then(function mySuccess(response) {
             if (response.data.success) {
                 console.log(response);
+                $window.localStorage.removeItem("playerID");
+                $window.localStorage.removeItem("playerName");
                 $location.path("/myCollection");
 
             }
