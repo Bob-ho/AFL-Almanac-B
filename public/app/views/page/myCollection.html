@@ -25,7 +25,7 @@
             <li class=" col-sm-12 list-group-item" ng-click="setClickedRow(row.playerName,row.Position,row.Height,row.Weight,row.DOB,row.Debut, row.Games, row.Goals, row.Cards )">
                 <div>
                     <div class="col-sm-11">
-                        <p class="font-weight-bold text-primary"> {{row.playerName}}</p>
+                        <a href="#" class="font-weight-bold text-primary"> {{row.playerName}}</a>
                     </div>
                 </div>
             </li>
@@ -84,6 +84,10 @@
                 <tr>
 
                     <td><button class="btn btn-success" ng-click="AddToMyCollection()">View Video</button></td>
+                    <td><button class="btn btn-success" ng-click="AddToMyCollection()">View team mate</button></td>
+                    <td><button class="btn btn-success" ng-click="AddToMyCollection()">View my career path</button></td>
+
+
                 </tr>
             </tbody>
         </table>

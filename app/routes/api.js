@@ -79,9 +79,9 @@ module.exports = function (router) {
                 res.json({ success: false, message: 'Unable to save to the database', m: err });
                 return;
             }
-            else {
-                res.json({ success: true, message: 'Player created!' });
-            }
+            
+            res.json({ success: true, message: 'Player created!' });
+            
         });
     });
 

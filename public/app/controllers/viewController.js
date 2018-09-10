@@ -1,6 +1,13 @@
 var app = angular.module("indexApp", ['ngRoute']);
-app.controller('HeaderController', function ($scope, $window, $location, $window, $rootScope, $http) {
 
+
+app.controller('HeaderController', function ($scope, $window, $location, $window, $rootScope, $http) {
+  //change the image to hide when the size is reached to the list of image
+    $(window).resize(function(){
+        var $teamLogo = $('#teamLogo');
+        $window.innerWidth <= 1300 ? $teamLogo.hide() : $teamLogo.show();
+    });
+    
     //When the route change, this function will call
     $rootScope.$on('$routeChangeStart', function () {
         //console.log("Get token" +$window.localStorage.getItem("token"));
@@ -17,23 +24,21 @@ app.controller('HeaderController', function ($scope, $window, $location, $window
             console.log("user is not login");
         }
 
-        if($window.localStorage.getItem("playerID"))
-    {
-        $scope.showCardToAddToCollection = true;
-        var array = [];
-        array.push($window.localStorage.getItem("playerName"));
-        $scope.cards = array;
+        if ($window.localStorage.getItem("playerID")) {
+            $scope.showCardToAddToCollection = true;
+            var array = [];
+            array.push($window.localStorage.getItem("playerName"));
+            $scope.cards = array;
 
-        console.log("card" + $scope.cards);
-    }else
-    {
-        console.log("NO");
-        $scope.showCardToAddToCollection = false;
+            console.log("card" + $scope.cards);
+        } else {
+            console.log("NO");
+            $scope.showCardToAddToCollection = false;
 
-    }
+        }
 
     });
-    
+
     // Add collection click
     $scope.AddToMyCollection = function () {
         console.log("Add to my collection clicked");
@@ -42,7 +47,7 @@ app.controller('HeaderController', function ($scope, $window, $location, $window
         $http({
             method: "post",
             url: "/AddToMyCollection",
-            data: { "playerID":$window.localStorage.getItem("playerID"), "username": $window.localStorage.getItem("username") }
+            data: { "playerID": $window.localStorage.getItem("playerID"), "username": $window.localStorage.getItem("username") }
         }).then(function mySuccess(response) {
             if (response.data.success) {
                 console.log(response);
@@ -76,27 +81,27 @@ app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
 });
 
 //my Collection controller
-app.controller('myCollectionCtr', function ($scope, $http,$window) {
+app.controller('myCollectionCtr', function ($scope, $http, $window) {
     $scope.showPlayerDetail = true;
-    google.charts.load('current', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(drawChart);
-   var a = 1;
+    //     google.charts.load('current', { 'packages': ['corechart'] });
+    //     google.charts.setOnLoadCallback(drawChart);
+    //    var a = 1;
 
-    // Draw the chart and set the chart values
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Point', a],
-            ['More Collection', 2]
-        ]);
+    //     // Draw the chart and set the chart values
+    //     function drawChart() {
+    //         var data = google.visualization.arrayToDataTable([
+    //             ['Task', 'Hours per Day'],
+    //             ['Point', a],
+    //             ['More Collection', 2]
+    //         ]);
 
-        // Optional; add a title and set the width and height of the chart
-        var options = { 'title': 'My Average Day'};
+    //         // Optional; add a title and set the width and height of the chart
+    //         var options = { 'title': 'My Average Day'};
 
-        // Display the chart inside the <div> element with id="piechart"
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-    }
+    //         // Display the chart inside the <div> element with id="piechart"
+    //         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    //         chart.draw(data, options);
+    //     }
     console.log("Collection controller");
     //Get the job detail which given the _id to retrived data from the database
     $http({
@@ -114,7 +119,7 @@ app.controller('myCollectionCtr', function ($scope, $http,$window) {
         }
     });
     //Click to each row click
-    $scope.setClickedRow = function (playerName,position,Height,Weight,DOB,Debut, Games, Goals, Cards ) {
+    $scope.setClickedRow = function (playerName, position, Height, Weight, DOB, Debut, Games, Goals, Cards) {
         $scope.showPlayerDetail = false;
         $scope.playerName = playerName;
         $scope.Position = position;
@@ -125,7 +130,7 @@ app.controller('myCollectionCtr', function ($scope, $http,$window) {
         $scope.Games = Games;
         $scope.Goals = Goals;
         $scope.Cards = Cards;
-        
+
         //console.log($scope.collections);
         //console.log("direct to detail job");
         //$location.path('/jobDetail').search({ id: id })
@@ -214,7 +219,7 @@ app.controller('playerCtr', function ($scope, $routeParams, $http, $window, $loc
             $scope.Debut = res.Debut
             $scope.Games = res.Games
             $scope.Goals = res.Goals
-            console.log("id "+ res._id);
+            console.log("id " + res._id);
             $window.localStorage.setItem("playerID", res._id);
             $window.localStorage.setItem("playerName", res.playerName);
         }
