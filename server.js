@@ -1,104 +1,122 @@
-var express = require('express');// ExperssJS Framework
-var app = express();// Invoke express to variable for use in application
-var bodyParser = require('body-parser'); // Node.js body parsing middleware. Parses incoming request bodies in a middleware before your handlers, available under req.body.
-var router = express.Router(); // Invoke the Express Router
-var appRoutes = require('./app/routes/api')(router); // Import the application end points/API
-var path = require('path');
-var expressValidator = require('express-validator');
+var express = require('express');
+var path = require('path'); 
+var mongo = require('mongodb').MongoClient;;
+var bodyParser = require('body-parser');
+var crypto = require('crypto');
 
-app.use(bodyParser.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
-app.use(expressValidator());
-app.use(bodyParser.json()); // Body-parser middleware
-app.use(express.static(__dirname + '/public')); // Allow front end to access public folder
-app.use(appRoutes);
-app.enable('trust proxy');
+var app = express();
+//enter the name of the database in the end 
+var new_db = "mongodb://localhost:27017/";
+									app.get('/',function(req,res){
+	res.set({
+		'Access-Control-Allow-Origin' : '*'
+	});
+	return res.redirect('/public/index1.html');
+}).listen(3000);
 
-//var port = process.env.PORT || 8080;
-var mongoose = require('mongoose');
-var morgan = require("morgan");
+console.log("Server listening at : 3000");
+app.use('/public', express.static(__dirname + '/public'));
+app.use( bodyParser.json() );
+app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
+	extended: true
+}));
 
-
-
-
-
-
-
-
-
-cfenv = require('cfenv');// Cloud Foundry Environment Variables
-appEnv = cfenv.getAppEnv();// Grab environment variables
-
-// Use SSL connection provided by Bluemix. No setup required besides redirecting all HTTP requests to HTTPS
-if (!appEnv.isLocal) {
-    app.use(function (req, res, next) {
-        if (req.secure) // returns true is protocol = https
-            next();
-        else
-            res.redirect('https://' + req.headers.host + req.url);
-    });
-}
-app.use(morgan("dev"));
-
-
-
-
-
-
-/********************************
-Local Environment Variables
- ********************************/
-if(appEnv.isLocal){
-    require('dotenv').load();// Loads .env file into environment
-}
-
-/******************************** 
- MongoDB Connection
- ********************************/
-
-//Detects environment and connects to appropriate DB
-if(appEnv.isLocal){
-    mongoose.connect(process.env.LOCAL_MONGODB_URL);
-    sessionDB = process.env.LOCAL_MONGODB_URL;
-    console.log('Your MongoDB is running at ' + process.env.LOCAL_MONGODB_URL);
-}
-// Connect to MongoDB Service on Bluemix
-else if(!appEnv.isLocal) {
-    var mongoDbUrl, mongoDbOptions = {};
-    var mongoDbCredentials = appEnv.services["compose-for-mongodb"][0].credentials;
-    var ca = [new Buffer(mongoDbCredentials.ca_certificate_base64, 'base64')];
-    mongoDbUrl = mongoDbCredentials.uri;
-    mongoDbOptions = {
-      mongos: {
-        ssl: true,
-        sslValidate: true,
-        sslCA: ca,
-        poolSize: 1,
-        reconnectTries: 1
-      }
-    };
-
-    console.log("Your MongoDB is running at ", mongoDbUrl);
-    mongoose.connect(mongoDbUrl, mongoDbOptions); // connect to our database
-    sessionDB = mongoDbUrl;
-}
-else{
-    console.log('Unable to connect to MongoDB.');
-}
-
-
-
-
-
-app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
+app.get('/',function(req,res){
+	res.sendFile(path.join(__dirname, '/index.html'));
+})
+app.get('/',function(req,res){
+	res.sendFile(path.join(__dirname, '/signup.html'));
+})
+app.get('/',function(req,res){
+	res.sendFile(path.join(__dirname, '/login.html'));
+})
+app.get("/signup", function(req, res)
+{
+    res.sendFile('/signup.html');
+});
+app.get("/login", function(req, res)
+{
+    res.sendFile('/login.html');
 });
 
-// app.listen(port, function () {
-//     console.log("Running the server on port " + port);
-// });
-/********************************
-Ports
-********************************/
-app.listen(appEnv.port, appEnv.bind, function () {
-    console.log("Node server running on " + appEnv.url);
-});
+
+var getHash = ( pass , phone ) => {
+				
+				var hmac = crypto.createHmac('sha512', phone);
+				
+				//passing the data to be hashed
+				data = hmac.update(pass);
+				//Creating the hmac in the required format
+				gen_hmac= data.digest('hex');
+				//Printing the output on the console
+				console.log("hmac : " + gen_hmac);
+				return gen_hmac;
+}
+			
+
+// Sign-up function starts here. . .
+app.post('/sign_up' ,function(req,res){
+	var name = req.body.name;
+	var email= req.body.email;
+	var pass = req.body.password;
+	var phone = req.body.phone;
+	var city = req.body.city;
+	var address = req.body.address;
+	var password = getHash( pass , phone ); 				
+
+	
+	var data = {
+		"name":name,
+		"email":email,
+		"password": password, 
+		"phone" : phone,
+		"city" :city,
+		"address" :address
+	}
+	
+	mongo.connect(new_db , function(error , db){
+		if (error){
+			throw error;
+		}
+		var dbo = db.db("AFL_Customers");
+		console.log("connected to database successfully");
+		//CREATING A COLLECTION IN MONGODB USING NODE.JS
+		dbo.collection("details").insertOne(data, (err , collection) => {
+			if(err) throw err;
+			console.log("Record inserted successfully");
+			console.log(collection);
+		});
+	});
+	
+	console.log("DATA is " + JSON.stringify(data) );
+	res.set({
+		'Access-Control-Allow-Origin' : '*'
+	});
+	return res.redirect('/public/success.html');  
+
+});				
+
+app.get('/login', function(res, req){
+		var phone = req.body.phone;
+		var pass =req.body.password;
+		var password=getHash(pass, phone);
+		mongo.connect(new_db , function(error , db){
+		if (error){
+			throw error;
+		}
+		var dbo = db.db("AFL_Customers");
+		console.log("connected to database successfully");
+		var query={phone : phone, password : password}
+		dbo.collection("details").find(query).toArray(function(err , result) {
+			if(err) throw err;
+			console.log(result);
+			
+		});
+	});
+	console.log("DATA is " + JSON.stringify(data) );
+	res.set({
+		'Access-Control-Allow-Origin' : '*'
+	});
+	return res.redirect('/public/success.html');  
+
+});											
