@@ -96,7 +96,7 @@ app.post('/sign_up' ,function(req,res){
 
 });				
 
-app.get('/login', function(res, req){
+app.post('/login', function(res, req){
 		var phone = req.body.phone;
 		var pass =req.body.password;
 		var password=getHash(pass, phone);
