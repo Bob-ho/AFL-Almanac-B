@@ -2,12 +2,12 @@ var app = angular.module("indexApp", ['ngRoute']);
 
 
 app.controller('HeaderController', function ($scope, $window, $location, $window, $rootScope, $http) {
-  //change the image to hide when the size is reached to the list of image
-    $(window).resize(function(){
+    //change the image to hide when the size is reached to the list of image
+    $(window).resize(function () {
         var $teamLogo = $('#teamLogo');
         $window.innerWidth <= 1300 ? $teamLogo.hide() : $teamLogo.show();
     });
-    
+
     //When the route change, this function will call
     $rootScope.$on('$routeChangeStart', function () {
         //console.log("Get token" +$window.localStorage.getItem("token"));
@@ -83,25 +83,25 @@ app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
 //my Collection controller
 app.controller('myCollectionCtr', function ($scope, $http, $window) {
     $scope.showPlayerDetail = true;
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
-       var a = 1;
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    var a = 1;
 
-        // Draw the chart and set the chart values
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Point', a],
-                ['More Collection', 2]
-            ]);
+    // Draw the chart and set the chart values
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['Point', a],
+            ['More Collection', 2]
+        ]);
 
-            // Optional; add a title and set the width and height of the chart
-            var options = { 'title': 'My Average Day'};
+        // Optional; add a title and set the width and height of the chart
+        var options = { 'title': 'My Average Day' };
 
-            // Display the chart inside the <div> element with id="piechart"
-            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-            chart.draw(data, options);
-        }
+        // Display the chart inside the <div> element with id="piechart"
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+    }
     console.log("Collection controller");
     //Get the job detail which given the _id to retrived data from the database
     $http({
@@ -196,6 +196,39 @@ app.controller('registerController', function ($scope, $http, $location) {
 });
 //Player controller
 app.controller('playerCtr', function ($scope, $routeParams, $http, $window, $location) {
+
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    $scope.plusDivs = function (n) {
+        console.log(n);
+        showDivs(slideIndex += n);
+    }
+
+    $scope.currentDiv = function (n) {
+        showDivs(slideIndex = n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" w3-red", "");
+        }
+        x[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " w3-red";
+    }
+
+
+
+
+
     console.log("i am player " + $routeParams.playerID);
     // $scope.name = $routeParams.playerID;
     //get the url including the data parsing

@@ -58,12 +58,24 @@
                 </tr>
             </tbody>
         </table>
+        <button class="btn btn-success" ng-click="AddToMyCollection()">Add To My collection</button>
     </div>
     <div class="col-sm-1"></div>
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-            <button class="btn btn-success" ng-click="AddToMyCollection()">Add To My collection</button>
-        </div>
-        <div class="col-sm-4"></div>
+</div>
+<div class="row">
+    <div class="w3-content" style="max-width:800px">
+        <img class="mySlides" src="app/views/page/images/220px-Sydney_Swans_Logo.svg.png" style="width:100%">
+        <img class="mySlides" src="app/views/page/images/220px-Essendon_FC_logo.svg.png" style="width:100%">
+        <img class="mySlides" src="app/views/page/images/220px-Sydney_Swans_Logo.svg.png" style="width:100%">
     </div>
+
+    <div class="w3-center">
+        <div class="w3-section">
+            <button class="w3-button w3-light-grey" ng-click="plusDivs(-1)">❮ Prev</button>
+            <button class="w3-button w3-light-grey" ng-click="plusDivs(1)">Next ❯</button>
+        </div>
+        <button class="w3-button demo" ng-click="currentDiv(1)">1</button>
+        <button class="w3-button demo" ng-click="currentDiv(2)">2</button>
+        <button class="w3-button demo" ng-click="currentDiv(3)">3</button>
+    </div>
+</div>
