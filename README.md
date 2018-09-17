@@ -16,3 +16,6 @@ Deliverables:
 - Evidence-based approach to increasing engagement across 5-12 year olds through the proposed product; 
 - Risks/Issues/Dependencies/Constraints relating to development of the proposed product;
 - Next steps.
+How to running the program:
+- Open terminal mongod
+- in the visual Studio Code, type Node server.js which will run the application

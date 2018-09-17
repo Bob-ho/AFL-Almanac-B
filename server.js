@@ -15,7 +15,7 @@ var new_db = "mongodb://localhost:27017/";
 }).listen(3000);
 
 console.log("Server listening at : 3000");
-app.use('/public', express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public/foulder'));
 app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 	extended: true
