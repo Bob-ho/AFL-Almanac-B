@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 // User Mongoose Schema
 var player = new Schema({
+    imageLink:{ type: String, required: true},
     playerName: { type: String, required: true},
     Position: { type: String, required: true},
     Height: { type: String, required: true},

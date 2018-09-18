@@ -244,6 +244,8 @@ app.controller('playerCtr', function ($scope, $routeParams, $http, $window, $loc
         if (response.data.success) {
             var res = response.data.result;
             console.log(res);
+            $scope.playerImage = res.imageLink;
+            console.log($scope.playerImage);
             $scope.playerName = res.playerName;
             $scope.Position = res.Position
             $scope.Height = res.Height

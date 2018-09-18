@@ -64,6 +64,7 @@ module.exports = function (router) {
     //*****Add player details*/
     router.post('/AddPlayer', function (req, res) {
         var player = new Player();
+        player.imageLink = req.body.imageLink;
         player.playerName = req.body.playerName;
         player.Position = req.body.Position;
         player.Height = req.body.Height;
