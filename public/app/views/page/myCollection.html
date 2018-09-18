@@ -12,12 +12,9 @@
 
 <!--Display area-->
 <div class="row">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-3">
-        <h4 class="text-primary">point achieved</h4>
-        <div id="piechart"></div>
 
-       
+    <div class="col-sm-4">
+        <div id="piechart"></div>
     </div>
     <div class="col-sm-4">
 
@@ -26,6 +23,7 @@
                 <div>
                     <div class="col-sm-11">
                         <a href="#" class="font-weight-bold text-primary"> {{row.playerName}}</a>
+                        <img ng-src="{{row.imageLink}}" alt="Player">
                     </div>
                 </div>
             </li>

@@ -83,27 +83,10 @@ app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
 //my Collection controller
 app.controller('myCollectionCtr', function ($scope, $http, $window) {
     $scope.showPlayerDetail = true;
-    google.charts.load('current', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(drawChart);
-    var a = 1;
-
-    // Draw the chart and set the chart values
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Point', a],
-            ['More Collection', 2]
-        ]);
-
-        // Optional; add a title and set the width and height of the chart
-        var options = { 'title': 'My Average Day' };
-
-        // Display the chart inside the <div> element with id="piechart"
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-    }
+    var point = 0;
+    
     console.log("Collection controller");
-    //Get the job detail which given the _id to retrived data from the database
+    //Get the player detail which given the _id to retrived data from the database
     $http({
         method: "post",
         url: "/ViewMyCollection",
@@ -112,6 +95,8 @@ app.controller('myCollectionCtr', function ($scope, $http, $window) {
         if (response.data.success) {
             var res = response.data.collections;
             console.log(res);
+            console.log("my totol point "+res[0].point);
+            point = res[0].point;
             $scope.collections = response.data.collections;
         }
         else {
@@ -130,10 +115,30 @@ app.controller('myCollectionCtr', function ($scope, $http, $window) {
         $scope.Games = Games;
         $scope.Goals = Goals;
         $scope.Cards = Cards;
+    }
+    //Pie chart
+    google.charts.load('current', { 'packages': ['corechart'] });
+    setTimeout(function() {
+        google.charts.setOnLoadCallback(drawChart);
+    }, 2000);
+   
+    //var a = 1;
 
-        //console.log($scope.collections);
-        //console.log("direct to detail job");
-        //$location.path('/jobDetail').search({ id: id })
+    // Draw the chart and set the chart values
+    function drawChart() {
+        console.log(point);
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'My card collection'],
+            ['Point', point],
+            ['More Collection', 200]
+        ]);
+
+        // Optional; add a title and set the width and height of the chart
+        var options = { 'title': 'Point collections' };
+
+        // Display the chart inside the <div> element with id="piechart"
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
     }
 
 

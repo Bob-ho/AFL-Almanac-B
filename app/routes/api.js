@@ -73,6 +73,7 @@ module.exports = function (router) {
         player.Debut = req.body.Debut;
         player.Games = req.body.Games;
         player.Goals = req.body.Goals;
+        player.point = req.body.point;
         console.log(player);
 
         player.save(function (err) {

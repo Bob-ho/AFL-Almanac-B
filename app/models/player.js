@@ -12,7 +12,7 @@ var player = new Schema({
     Games: { type: String, required: true},
     Goals: { type: String, required: true},
     Cards: { type: String, required: false},
+    point: { type: Number, required: false},
 });
-
 module.exports = mongoose.model('Player',player);
 
