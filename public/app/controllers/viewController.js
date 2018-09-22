@@ -1,4 +1,34 @@
 var app = angular.module("indexApp", ['ngRoute']);
+var Years =
+    [
+        { type: "2010" },
+        { type: "2011" },
+        { type: "2012" },
+        { type: "2013" },
+        { type: "2014" },
+        { type: "2015" },
+        { type: "2016" },
+    ];
+var Teams =
+    [
+        { type: "Adelaide" },
+        { type: "Brisbane" },
+        { type: "Carlton" },
+        { type: "Collingwood" },
+        { type: "Fremantle" },
+        { type: "Geelong" },
+        { type: "Gold Coast" },
+        { type: "Greater Western Sydney" },
+        { type: "Hawthorn" },
+        { type: "Melbourne" },
+        { type: "North Melbourne" },
+        { type: "Port Adelaide" },
+        { type: "Richmond" },
+        { type: "St Kilda" },
+        { type: "Sydney" },
+        { type: "West Coast" },
+        { type: "Western Bulldogs" },
+    ];
 
 
 app.controller('HeaderController', function ($scope, $window, $location, $window, $rootScope, $http) {
@@ -75,6 +105,12 @@ app.controller('HeaderController', function ($scope, $window, $location, $window
     };
 
 });
+//my team against controller
+app.controller('TeamAgainstController', function ($scope, $routeParams, $http) {
+    console.log("Team agains controller");
+    $scope.years = Years;
+    $scope.teams = Teams;
+});
 //my Account controller
 app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
     console.log("Account controller");
@@ -84,7 +120,7 @@ app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
 app.controller('myCollectionCtr', function ($scope, $http, $window) {
     $scope.showPlayerDetail = true;
     var point = 0;
-    
+
     console.log("Collection controller");
     //Get the player detail which given the _id to retrived data from the database
     $http({
@@ -95,7 +131,7 @@ app.controller('myCollectionCtr', function ($scope, $http, $window) {
         if (response.data.success) {
             var res = response.data.collections;
             console.log(res);
-            console.log("my totol point "+res[0].point);
+            console.log("my totol point " + res[0].point);
             point = res[0].point;
             $scope.collections = response.data.collections;
         }
@@ -118,10 +154,10 @@ app.controller('myCollectionCtr', function ($scope, $http, $window) {
     }
     //Pie chart
     google.charts.load('current', { 'packages': ['corechart'] });
-    setTimeout(function() {
+    setTimeout(function () {
         google.charts.setOnLoadCallback(drawChart);
     }, 2000);
-   
+
     //var a = 1;
 
     // Draw the chart and set the chart values
@@ -269,6 +305,10 @@ app.config(function ($routeProvider, $locationProvider) {
 
         .when("/Home", {
             templateUrl: "app/views/page/home.html"
+        })
+        .when("/TeamAgainst", {
+            templateUrl: "app/views/page/TeamAgainst.html",
+            controller: 'TeamAgainstController'
         })
         .when("/", {
             templateUrl: "app/views/page/home.html"
