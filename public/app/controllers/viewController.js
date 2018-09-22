@@ -110,6 +110,9 @@ app.controller('TeamAgainstController', function ($scope, $routeParams, $http) {
     console.log("Team agains controller");
     $scope.years = Years;
     $scope.teams = Teams;
+    $scope.ViewHeadtoHeadButtonClick = function (Search) {
+        console.log(Search);
+    };
 });
 //my Account controller
 app.controller('myAccountCtr', function ($scope, $routeParams, $http) {

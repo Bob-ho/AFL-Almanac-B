@@ -14,17 +14,17 @@
     <div class="col-sm-8">
         <form class="form-inline">
 
-            <select class="col-sm-5" ng-model="Search.JobCategory">
+            <select class="col-sm-5" ng-model="Search.TeamA">
                 <option value="">Select Team</option>
                 <option ng-repeat="team in teams" value="{{team.type}}">{{team.type}}</option>
             </select>
 
-            <select class="col-sm-2" ng-model="Search.JobCategory">
+            <select class="col-sm-2" ng-model="Search.Year">
                 <option value="">Year</option>
                 <option ng-repeat="year in years" value="{{year.type}}">{{year.type}}</option>
             </select>
 
-            <select class="col-sm-5" ng-model="Search.JobCategory">
+            <select class="col-sm-5" ng-model="Search.TeamB">
                 <option value="">Select Team</option>
                 <option ng-repeat="team in teams" value="{{team.type}}">{{team.type}}</option>
             </select>
@@ -33,10 +33,10 @@
     <div class="col-sm-2"></div>
 </div>
 <div class="row">
-    <div class="col-sm-5"></div>
-    <div class="col-sm-2" style="padding: 20px;">
-        <button  class="col-sm-12 btn btn-success" ng-click="SeachButtonClick(Search)">Head to Head</button>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4" style="padding: 20px;">
+        <button  class="col-sm-12 btn btn-success" ng-click="ViewHeadtoHeadButtonClick(Search)">View Head to Head</button>
     </div>
-    <div class="col-sm-5"></div>
+    <div class="col-sm-4"></div>
 </div>
 <hr>
