@@ -23,7 +23,7 @@ if (connection !== "undefined") {
             });
             readstream.pipe(fsstreamwrite);
             readstream.on("close", function (file) {
-                console.log("File Read successfully from database");
+                console.log("File Read successfully fro database");
             });
         } else {
             console.log("Sorry No Grid FS Object");
