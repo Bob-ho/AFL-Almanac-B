@@ -105,7 +105,7 @@ app.get('/login', function(res, req){
 			throw error;
 		}
 		var dbo = db.db("AFL_Customers");
-		console.log("connected to database successfully");
+		console.log("connected to databas successfully");
 		var query={phone : phone, password : password}
 		dbo.collection("details").find(query).toArray(function(err , result) {
 			if(err) throw err;
