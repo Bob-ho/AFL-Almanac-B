@@ -4,6 +4,12 @@
 <head>
     <base href="/">
     <title>AFL</title>
+    <meta property="og:url" content="https://www.your-domain.com/your-page.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Your Website Title" />
+    <meta property="og:description" content="Your description" />
+    <meta property="og:image" content="https://www.your-domain.com/path/image.jpg" />
+
     <link rel="shortcut icon" type="image/x-icon" href="app/views/page/images/AFLlogo.png" />
     <style>
         .footer {
@@ -16,6 +22,7 @@
             text-align: center;
             
         }
+        body {background-color: #92a8d1;}
     </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,7 +57,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img src="app/views/page/images/AFLlogo.png" width="30" height="30" alt=""></a>
+                <a class="navbar-brand" href="#"><img src="app/views/page/images/AFLlogo.png" width="30" height="30"
+                        alt=""></a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar" resize>
                 <ul class="nav navbar-nav" id="teamLogo">
@@ -72,8 +80,8 @@
                                 width="30" height="30" alt=""></a></li>
                     <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/1200px-Hawthorn-football-club-brand.svg.png"
                                 width="30" height="30" alt=""></a></li>
-                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/1200px-Melbournefc.svg.png" width="30"
-                                height="30" alt=""></a></li>
+                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/1200px-Melbournefc.svg.png"
+                                width="30" height="30" alt=""></a></li>
                     <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/1200px-North_Melbourne_FC_logo.svg.png"
                                 width="30" height="30" alt=""></a></li>
                     <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/1200px-Richmond_Tigers_logo.svg.png"
@@ -82,16 +90,16 @@
                                 width="30" height="30" alt=""></a></li>
                     <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/1200px-Western_Bulldogs_logo.svg.png"
                                 width="30" height="30" alt=""></a></li>
-                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/Adelaide_Crows.png" width="30"
-                                height="30" alt=""></a></li>
-                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/Brisbane_Lions.png" width="30"
-                                height="30" alt=""></a></li>
+                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/Adelaide_Crows.png"
+                                width="30" height="30" alt=""></a></li>
+                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/Brisbane_Lions.png"
+                                width="30" height="30" alt=""></a></li>
                     <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/1200px-Carlton_FC_logo.svg.png"
                                 width="30" height="30" alt=""></a></li>
-                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/Collingwood.png" width="30" height="30"
-                                alt=""></a></li>
-                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/PortAdelaid.png" width="30" height="30"
-                                alt=""></a></li>
+                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/Collingwood.png"
+                                width="30" height="30" alt=""></a></li>
+                    <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/PortAdelaid.png"
+                                width="30" height="30" alt=""></a></li>
                     <li ng-hide="aflImageHide"> <a class="navbar-brand" href="#"><img src="app/views/page/images/West_Coast_Eagles_logo_2017.svg.png"
                                 width="30" height="30" alt=""></a></li>
 
@@ -115,7 +123,8 @@
                             <li><a href="/myCollection">My Collection</a></li>
                         </ul>
                     </li>
-                    <li><a href="/register" ng-hide="authenticated"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="/register" ng-hide="authenticated"><span class="glyphicon glyphicon-user"></span> Sign
+                            Up</a></li>
                     <li><a href="/login" ng-hide="authenticated"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <li><a href='' ng-click="logout()" ng-show="authenticated"><span class="glyphicon glyphicon-log-out"></span>
                             Logout</a>

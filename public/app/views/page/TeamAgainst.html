@@ -35,8 +35,69 @@
 <div class="row">
     <div class="col-sm-4"></div>
     <div class="col-sm-4" style="padding: 20px;">
-        <button  class="col-sm-12 btn btn-success" ng-click="ViewHeadtoHeadButtonClick(Search)">View Head to Head</button>
+        <button class="col-sm-12 btn btn-success" data-toggle="modal" data-target="#myModal" ng-click="ViewHeadtoHeadButtonClick(Search)">View
+            Head to Head</button>
     </div>
     <div class="col-sm-4"></div>
 </div>
 <hr>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 style="color:rgb(238, 48, 23);text-align: center;">What next</h2>
+                <h4 style="color:rgb(238, 48, 23);text-align: center;" class="modal-title">Want to View Hightlight Video</h4>
+            </div>
+            <div class="modal-body">
+                    <h4 style="color:rgb(34, 6, 133);text-align: center;" class="modal-title">Click to particular match</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row" ng-hide="ResultTable">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8" style="padding: 20px;">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Round</th>
+                    <th scope="col">{{Search.TeamA}}</th>
+                    <th scope="col">{{Search.TeamB}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-click="GetVideoResultClick(Search)">
+                    <th scope="row">1</th>
+                    <td>40</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>40</td>
+                    <td>70</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>67</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <th scope="row">8</th>
+                    <td>44</td>
+                    <td>66</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-2"></div>
+</div>

@@ -13,10 +13,11 @@
 <!--Display area-->
 <div class="row">
 
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <div id="piechart"></div>
+        <div id="curve_chart" ></div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
 
         <ul class="list-group" ng-repeat="row in collections">
             <li class=" col-sm-12 list-group-item" ng-click="setClickedRow(row.playerName,row.Position,row.Height,row.Weight,row.DOB,row.Debut, row.Games, row.Goals, row.Cards )">
@@ -29,7 +30,7 @@
             </li>
         </ul>
     </div>
-    <div class="col-sm-3" ng-hide="showPlayerDetail">
+    <div class="col-sm-2" ng-hide="showPlayerDetail">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -81,10 +82,8 @@
                 </tr>
                 <tr>
 
-                    <td><button class="btn btn-success" ng-click="AddToMyCollection()">View Video</button></td>
-                    <td><button class="btn btn-success" ng-click="AddToMyCollection()">View team mate</button></td>
-                    <td><button class="btn btn-success" ng-click="AddToMyCollection()">View my career path</button></td>
-
+                    <td><button class="btn btn-success" ng-click="ViewVideo()">View Video</button></td>
+              
 
                 </tr>
             </tbody>

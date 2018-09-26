@@ -105,14 +105,33 @@ app.controller('HeaderController', function ($scope, $window, $location, $window
     };
 
 });
+app.controller('TeamAgainstVideoController', function ($scope,$location, $routeParams, $http) {
+    console.log("Team video controller");
+    //get the url including the data parsing
+    var urlParams = $location.search();
+    $scope.teamA = urlParams.teamA;
+    $scope.teamB  = urlParams.teamB;
+  
+
+});
+
 //my team against controller
-app.controller('TeamAgainstController', function ($scope, $routeParams, $http) {
+app.controller('TeamAgainstController', function ($scope,$location, $routeParams, $http) {
     console.log("Team agains controller");
+    $scope.ResultTable =  true;
     $scope.years = Years;
     $scope.teams = Teams;
+    //View head to head button click
     $scope.ViewHeadtoHeadButtonClick = function (Search) {
         console.log(Search);
+        if(Search.TeamA != null|| Search.Year != null ||Search.TeamB != null)
+        {
+            $scope.ResultTable =  false;
+        }
     };
+    $scope.GetVideoResultClick = function(Search){
+        $location.path('/TeamAgainst/TeamVideo.html').search({ teamA: Search.TeamA, teamB:Search.TeamB });
+    }
 });
 //my Account controller
 app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
@@ -120,7 +139,7 @@ app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
 });
 
 //my Collection controller
-app.controller('myCollectionCtr', function ($scope, $http, $window) {
+app.controller('myCollectionCtr', function ($scope, $http, $window, $location) {
     $scope.showPlayerDetail = true;
     var point = 0;
 
@@ -155,6 +174,40 @@ app.controller('myCollectionCtr', function ($scope, $http, $window) {
         $scope.Goals = Goals;
         $scope.Cards = Cards;
     }
+    //line chart
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawLineChart);
+
+    function drawLineChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Month', 'Collected'],
+        ['Jan',  0],
+        ['Fed',  1],
+        ['Mar',  0],
+        ['Apr',  0],
+        ['May',  0],
+        ['Jun',  0],
+        ['Jul',  0],
+        ['Aug',  0],
+        ['Sep',  2],
+        ['Oct',  2],
+        ['Nov',  0],
+        ['Dec',  0],
+      ]);
+
+      var options = {
+        title: 'My Collection Performance',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+      chart.draw(data, options);
+    }
+
+
+
     //Pie chart
     google.charts.load('current', { 'packages': ['corechart'] });
     setTimeout(function () {
@@ -179,10 +232,10 @@ app.controller('myCollectionCtr', function ($scope, $http, $window) {
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);
     }
-
-
-
-
+    $scope.ViewVideo = function () {
+        console.log("ViewVideo");
+        $location.path("/player/Video");
+    }
 
 });
 //******User Login*****/
@@ -305,13 +358,19 @@ app.controller('playerCtr', function ($scope, $routeParams, $http, $window, $loc
 //App configuration
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
-
+        .when("/player/Video", {
+            templateUrl: "app/views/page/PlayerVideo.html"
+        })
         .when("/Home", {
             templateUrl: "app/views/page/home.html"
         })
         .when("/TeamAgainst", {
             templateUrl: "app/views/page/TeamAgainst.html",
             controller: 'TeamAgainstController'
+        })
+        .when("/TeamAgainst/TeamVideo.html", {
+            templateUrl: "app/views/page/TeamVideo.html",
+            controller: 'TeamAgainstVideoController'
         })
         .when("/", {
             templateUrl: "app/views/page/home.html"
