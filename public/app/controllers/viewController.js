@@ -105,32 +105,31 @@ app.controller('HeaderController', function ($scope, $window, $location, $window
     };
 
 });
-app.controller('TeamAgainstVideoController', function ($scope,$location, $routeParams, $http) {
+app.controller('TeamAgainstVideoController', function ($scope, $location, $routeParams, $http) {
     console.log("Team video controller");
     //get the url including the data parsing
     var urlParams = $location.search();
     $scope.teamA = urlParams.teamA;
-    $scope.teamB  = urlParams.teamB;
-  
+    $scope.teamB = urlParams.teamB;
+
 
 });
 
 //my team against controller
-app.controller('TeamAgainstController', function ($scope,$location, $routeParams, $http) {
+app.controller('TeamAgainstController', function ($scope, $location, $routeParams, $http) {
     console.log("Team agains controller");
-    $scope.ResultTable =  true;
+    $scope.ResultTable = true;
     $scope.years = Years;
     $scope.teams = Teams;
     //View head to head button click
     $scope.ViewHeadtoHeadButtonClick = function (Search) {
         console.log(Search);
-        if(Search.TeamA != null|| Search.Year != null ||Search.TeamB != null)
-        {
-            $scope.ResultTable =  false;
+        if (Search.TeamA != null || Search.Year != null || Search.TeamB != null) {
+            $scope.ResultTable = false;
         }
     };
-    $scope.GetVideoResultClick = function(Search){
-        $location.path('/TeamAgainst/TeamVideo.html').search({ teamA: Search.TeamA, teamB:Search.TeamB });
+    $scope.GetVideoResultClick = function (Search) {
+        $location.path('/TeamAgainst/TeamVideo.html').search({ teamA: Search.TeamA, teamB: Search.TeamB });
     }
 });
 //my Account controller
@@ -139,9 +138,10 @@ app.controller('myAccountCtr', function ($scope, $routeParams, $http) {
 });
 
 //my Collection controller
-app.controller('myCollectionCtr', function ($scope, $http, $window, $location) {
+app.controller('myCollectionCtr', function ($scope, $http, $window, $location, $timeout) {
     $scope.showPlayerDetail = true;
     var point = 0;
+    var numberTime = 0;
 
     console.log("Collection controller");
     //Get the player detail which given the _id to retrived data from the database
@@ -152,10 +152,17 @@ app.controller('myCollectionCtr', function ($scope, $http, $window, $location) {
     }).then(function mySuccess(response) {
         if (response.data.success) {
             var res = response.data.collections;
-            console.log(res);
-            console.log("my totol point " + res[0].point);
-            point = res[0].point;
-            $scope.collections = response.data.collections;
+           
+            $timeout(function() {
+                res.forEach(function(element) {
+                    point = point + element.point;
+                    numberTime = numberTime +1;
+                  }); 
+                
+                    console.log("my totol point " + point);
+                    console.log("number" + numberTime);
+                    $scope.collections = response.data.collections;
+              }, 1000);
         }
         else {
             console.log(response.data.result);
@@ -175,35 +182,38 @@ app.controller('myCollectionCtr', function ($scope, $http, $window, $location) {
         $scope.Cards = Cards;
     }
     //line chart
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawLineChart);
+    google.charts.load('current', { 'packages': ['corechart'] });
+
+    setTimeout(function () {
+        google.charts.setOnLoadCallback(drawLineChart);
+    }, 3000);
 
     function drawLineChart() {
-      var data = google.visualization.arrayToDataTable([
-        ['Month', 'Collected'],
-        ['Jan',  0],
-        ['Fed',  1],
-        ['Mar',  0],
-        ['Apr',  0],
-        ['May',  0],
-        ['Jun',  0],
-        ['Jul',  0],
-        ['Aug',  0],
-        ['Sep',  2],
-        ['Oct',  2],
-        ['Nov',  0],
-        ['Dec',  0],
-      ]);
+        var data = google.visualization.arrayToDataTable([
+            ['Month', 'Collected'],
+            ['Jan', 0],
+            ['Fed', 0],
+            ['Mar', 0],
+            ['Apr', 0],
+            ['May', 0],
+            ['Jun', 0],
+            ['Jul', 0],
+            ['Aug', 0],
+            ['Sep', numberTime],
+            ['Oct', 0],
+            ['Nov', 0],
+            ['Dec', 0],
+        ]);
 
-      var options = {
-        title: 'My Collection Performance',
-        curveType: 'function',
-        legend: { position: 'bottom' }
-      };
+        var options = {
+            title: 'My Collection Performance',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+        };
 
-      var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
-      chart.draw(data, options);
+        chart.draw(data, options);
     }
 
 
@@ -212,7 +222,7 @@ app.controller('myCollectionCtr', function ($scope, $http, $window, $location) {
     google.charts.load('current', { 'packages': ['corechart'] });
     setTimeout(function () {
         google.charts.setOnLoadCallback(drawChart);
-    }, 2000);
+    }, 3000);
 
     //var a = 1;
 
@@ -222,7 +232,7 @@ app.controller('myCollectionCtr', function ($scope, $http, $window, $location) {
         var data = google.visualization.arrayToDataTable([
             ['Task', 'My card collection'],
             ['Point', point],
-            ['More Collection', 200]
+            ['More Collection', 100]
         ]);
 
         // Optional; add a title and set the width and height of the chart
@@ -232,9 +242,9 @@ app.controller('myCollectionCtr', function ($scope, $http, $window, $location) {
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
         chart.draw(data, options);
     }
-    $scope.ViewVideo = function () {
-        console.log("ViewVideo");
-        $location.path("/player/Video");
+    $scope.ViewVideo = function (playerName) {
+        console.log("playerName" + playerName);
+        $location.path("/player/Video").search({ NameOfPlayer: playerName});
     }
 
 });
@@ -353,13 +363,20 @@ app.controller('playerCtr', function ($scope, $routeParams, $http, $window, $loc
         });
     }
 });
-
+app.controller('PlayerVideoController', function ($scope, $http, $location) {
+    console.log("this is PlayerVideoController controller");
+    var urlParams = $location.search();
+            $scope.NameOfPlayer = urlParams.NameOfPlayer;
+            console.log(urlParams.NameOfPlayer);
+});
 
 //App configuration
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when("/player/Video", {
-            templateUrl: "app/views/page/PlayerVideo.html"
+            
+            templateUrl: "app/views/page/PlayerVideo.html",
+            controller: 'PlayerVideoController'
         })
         .when("/Home", {
             templateUrl: "app/views/page/home.html"

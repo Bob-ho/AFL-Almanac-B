@@ -23,8 +23,8 @@
             <li class=" col-sm-12 list-group-item" ng-click="setClickedRow(row.playerName,row.Position,row.Height,row.Weight,row.DOB,row.Debut, row.Games, row.Goals, row.Cards )">
                 <div>
                     <div class="col-sm-11">
-                        <a href="#" class="font-weight-bold text-primary"> {{row.playerName}}</a>
-                        <img ng-src="{{row.imageLink}}" alt="Player">
+                        <img ng-src="{{row.imageLink}}" height="300" width="200">
+                        <a href="#" class="font-weight-bold text-danger"> {{row.playerName}}</a>
                     </div>
                 </div>
             </li>
@@ -82,7 +82,7 @@
                 </tr>
                 <tr>
 
-                    <td><button class="btn btn-success" ng-click="ViewVideo()">View Video</button></td>
+                    <td><button class="btn btn-success" ng-click="ViewVideo(playerName)">View Video</button></td>
               
 
                 </tr>
